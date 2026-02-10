@@ -1,0 +1,296 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Chipi",
+  "scopeName": "source.chipi",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#import-statement"
+    },
+    {
+      "include": "#decoder-block"
+    },
+    {
+      "include": "#type-definition"
+    },
+    {
+      "include": "#instruction-definition"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "name": "comment.line.number-sign.chipi",
+      "match": "#.*$"
+    },
+    "import-statement": {
+      "name": "meta.import.chipi",
+      "match": "^\\s*(import)\\s+([a-zA-Z_][a-zA-Z0-9_:]*(?:::[a-zA-Z_][a-zA-Z0-9_]*)*)\\s*$",
+      "captures": {
+        "1": {
+          "name": "keyword.control.import.chipi"
+        },
+        "2": {
+          "name": "entity.name.type.module.chipi"
+        }
+      }
+    },
+    "decoder-block": {
+      "name": "meta.decoder.chipi",
+      "begin": "^\\s*(decoder)\\s+([A-Z][a-zA-Z0-9_]*)\\s*(\\{)",
+      "end": "\\}",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.decoder.chipi"
+        },
+        "2": {
+          "name": "entity.name.type.decoder.chipi"
+        },
+        "3": {
+          "name": "punctuation.section.block.begin.chipi"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.chipi"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#decoder-properties"
+        }
+      ]
+    },
+    "decoder-properties": {
+      "patterns": [
+        {
+          "name": "meta.property.width.chipi",
+          "match": "^\\s*(width)\\s*(=)\\s*(\\d+)\\s*$",
+          "captures": {
+            "1": {
+              "name": "variable.parameter.chipi"
+            },
+            "2": {
+              "name": "keyword.operator.assignment.chipi"
+            },
+            "3": {
+              "name": "constant.numeric.decimal.chipi"
+            }
+          }
+        },
+        {
+          "name": "meta.property.bit-order.chipi",
+          "match": "^\\s*(bit_order)\\s*(=)\\s*(msb0|lsb0)\\s*$",
+          "captures": {
+            "1": {
+              "name": "variable.parameter.chipi"
+            },
+            "2": {
+              "name": "keyword.operator.assignment.chipi"
+            },
+            "3": {
+              "name": "constant.language.chipi"
+            }
+          }
+        }
+      ]
+    },
+    "type-definition": {
+      "name": "meta.type.chipi",
+      "match": "^\\s*(type)\\s+([a-z][a-zA-Z0-9_]*)\\s*(=)\\s+(.*)$",
+      "captures": {
+        "1": {
+          "name": "keyword.control.type.chipi"
+        },
+        "2": {
+          "name": "entity.name.type.chipi"
+        },
+        "3": {
+          "name": "keyword.operator.assignment.chipi"
+        },
+        "4": {
+          "patterns": [
+            {
+              "include": "#type-expression"
+            }
+          ]
+        }
+      }
+    },
+    "type-expression": {
+      "patterns": [
+        {
+          "name": "meta.type.as.chipi",
+          "match": "([a-z0-9_]+)\\s+(as)\\s+([A-Z][a-zA-Z0-9_]*)(?:\\s*(\\{)([^}]*)(\\}))?",
+          "captures": {
+            "1": {
+              "name": "storage.type.primitive.chipi"
+            },
+            "2": {
+              "name": "keyword.control.as.chipi"
+            },
+            "3": {
+              "name": "entity.name.type.custom.chipi"
+            },
+            "4": {
+              "name": "punctuation.section.block.begin.chipi"
+            },
+            "5": {
+              "patterns": [
+                {
+                  "include": "#transforms"
+                }
+              ]
+            },
+            "6": {
+              "name": "punctuation.section.block.end.chipi"
+            }
+          }
+        },
+        {
+          "name": "meta.type.custom.chipi",
+          "match": "([A-Z][a-zA-Z0-9_]*)\\(([a-z0-9_]+)\\)(?:\\s*(\\{)([^}]*)(\\}))?",
+          "captures": {
+            "1": {
+              "name": "entity.name.type.custom.chipi"
+            },
+            "2": {
+              "name": "storage.type.primitive.chipi"
+            },
+            "3": {
+              "name": "punctuation.section.block.begin.chipi"
+            },
+            "4": {
+              "patterns": [
+                {
+                  "include": "#transforms"
+                }
+              ]
+            },
+            "5": {
+              "name": "punctuation.section.block.end.chipi"
+            }
+          }
+        },
+        {
+          "name": "meta.type.primitive.chipi",
+          "match": "([a-z0-9_]+)(?:\\s*(\\{)([^}]*)(\\}))?",
+          "captures": {
+            "1": {
+              "name": "storage.type.primitive.chipi"
+            },
+            "2": {
+              "name": "punctuation.section.block.begin.chipi"
+            },
+            "3": {
+              "patterns": [
+                {
+                  "include": "#transforms"
+                }
+              ]
+            },
+            "4": {
+              "name": "punctuation.section.block.end.chipi"
+            }
+          }
+        }
+      ]
+    },
+    "transforms": {
+      "patterns": [
+        {
+          "name": "meta.transform.chipi",
+          "match": "(sign_extend|zero_extend|shift_left)\\((\\d+)\\)",
+          "captures": {
+            "1": {
+              "name": "support.function.transform.chipi"
+            },
+            "2": {
+              "name": "constant.numeric.decimal.chipi"
+            }
+          }
+        },
+        {
+          "name": "punctuation.separator.comma.chipi",
+          "match": ","
+        }
+      ]
+    },
+    "instruction-definition": {
+      "name": "meta.instruction.chipi",
+      "match": "^\\s*([a-z_][a-z0-9_]*)\\s+(.*)$",
+      "captures": {
+        "1": {
+          "name": "entity.name.function.instruction.chipi"
+        },
+        "2": {
+          "patterns": [
+            {
+              "include": "#instruction-parts"
+            }
+          ]
+        }
+      }
+    },
+    "instruction-parts": {
+      "patterns": [
+        {
+          "include": "#fixed-bits"
+        },
+        {
+          "include": "#named-field"
+        }
+      ]
+    },
+    "fixed-bits": {
+      "name": "meta.fixed-bits.chipi",
+      "match": "\\[(\\d+)(?::(\\d+))?\\]\\s*=\\s*([01]+)",
+      "captures": {
+        "1": {
+          "name": "constant.numeric.decimal.chipi"
+        },
+        "2": {
+          "name": "constant.numeric.decimal.chipi"
+        },
+        "3": {
+          "name": "constant.numeric.binary.chipi"
+        }
+      }
+    },
+    "named-field": {
+      "name": "meta.field.chipi",
+      "match": "([a-z_][a-z0-9_]*)\\s*:\\s*([a-zA-Z_][a-zA-Z0-9_]*)(?:\\s*(\\{)([^}]*)(\\}))?\\s*\\[(\\d+)(?::(\\d+))?\\]",
+      "captures": {
+        "1": {
+          "name": "variable.parameter.field.chipi"
+        },
+        "2": {
+          "name": "storage.type.chipi"
+        },
+        "3": {
+          "name": "punctuation.section.block.begin.chipi"
+        },
+        "4": {
+          "patterns": [
+            {
+              "include": "#transforms"
+            }
+          ]
+        },
+        "5": {
+          "name": "punctuation.section.block.end.chipi"
+        },
+        "6": {
+          "name": "constant.numeric.decimal.chipi"
+        },
+        "7": {
+          "name": "constant.numeric.decimal.chipi"
+        }
+      }
+    }
+  }
+}

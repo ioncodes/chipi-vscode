@@ -1,0 +1,35 @@
+{
+  "name": "chipi-lang",
+  "displayName": "Chipi Language",
+  "description": "Syntax highlighting for chipi files",
+  "version": "0.1.0",
+  "publisher": "local",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "chipi",
+        "aliases": [
+          "Chipi",
+          "chipi"
+        ],
+        "extensions": [
+          ".chipi"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "chipi",
+        "scopeName": "source.chipi",
+        "path": "./syntaxes/chipi.tmLanguage.json"
+      }
+    ]
+  }
+}
