@@ -16,6 +16,12 @@
       "include": "#type-definition"
     },
     {
+      "include": "#map-block"
+    },
+    {
+      "include": "#format-line"
+    },
+    {
       "include": "#instruction-definition"
     }
   ],
@@ -217,6 +223,195 @@
         {
           "name": "punctuation.separator.comma.chipi",
           "match": ","
+        }
+      ]
+    },
+    "map-block": {
+      "name": "meta.map.chipi",
+      "begin": "^\\s*(map)\\s+([a-z_][a-zA-Z0-9_]*)\\s*\\(([^)]*)\\)\\s*(\\{)",
+      "end": "\\}",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.map.chipi"
+        },
+        "2": {
+          "name": "entity.name.function.map.chipi"
+        },
+        "3": {
+          "patterns": [
+            {
+              "name": "variable.parameter.map.chipi",
+              "match": "[a-z_][a-zA-Z0-9_]*"
+            },
+            {
+              "name": "punctuation.separator.comma.chipi",
+              "match": ","
+            }
+          ]
+        },
+        "4": {
+          "name": "punctuation.section.block.begin.chipi"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.block.end.chipi"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#map-entry"
+        }
+      ]
+    },
+    "map-entry": {
+      "name": "meta.map-entry.chipi",
+      "match": "^\\s*([^=>#]+?)(=>)\\s*(.*)$",
+      "captures": {
+        "1": {
+          "patterns": [
+            {
+              "name": "constant.numeric.decimal.chipi",
+              "match": "\\b\\d+\\b"
+            },
+            {
+              "name": "constant.numeric.hex.chipi",
+              "match": "\\b0[xX][0-9a-fA-F]+\\b"
+            },
+            {
+              "name": "constant.language.wildcard.chipi",
+              "match": "\\b_\\b"
+            },
+            {
+              "name": "punctuation.separator.comma.chipi",
+              "match": ","
+            }
+          ]
+        },
+        "2": {
+          "name": "keyword.operator.arrow.chipi"
+        },
+        "3": {
+          "patterns": [
+            {
+              "include": "#format-interpolation"
+            },
+            {
+              "name": "string.unquoted.map-output.chipi",
+              "match": "[^{]+"
+            }
+          ]
+        }
+      }
+    },
+    "format-line": {
+      "name": "meta.format-line.chipi",
+      "match": "^\\s*(\\|)\\s*(?:([^\"]*?)(:)\\s*)?\"([^\"]*)\"\\s*$",
+      "captures": {
+        "1": {
+          "name": "keyword.operator.pipe.chipi"
+        },
+        "2": {
+          "patterns": [
+            {
+              "include": "#guard-expression"
+            }
+          ]
+        },
+        "3": {
+          "name": "punctuation.separator.guard.chipi"
+        },
+        "4": {
+          "name": "string.quoted.double.format.chipi",
+          "patterns": [
+            {
+              "include": "#format-interpolation"
+            }
+          ]
+        }
+      }
+    },
+    "guard-expression": {
+      "patterns": [
+        {
+          "name": "keyword.operator.comparison.chipi",
+          "match": "==|!=|<=|>=|<|>"
+        },
+        {
+          "name": "keyword.operator.logical.chipi",
+          "match": "&&"
+        },
+        {
+          "name": "constant.numeric.decimal.chipi",
+          "match": "\\b\\d+\\b"
+        },
+        {
+          "name": "constant.numeric.hex.chipi",
+          "match": "\\b0[xX][0-9a-fA-F]+\\b"
+        },
+        {
+          "name": "variable.parameter.field.chipi",
+          "match": "\\b[a-z_][a-zA-Z0-9_]*\\b"
+        },
+        {
+          "name": "punctuation.separator.comma.chipi",
+          "match": ","
+        }
+      ]
+    },
+    "format-interpolation": {
+      "name": "meta.interpolation.chipi",
+      "begin": "\\{",
+      "end": "\\}",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.section.interpolation.begin.chipi"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.section.interpolation.end.chipi"
+        }
+      },
+      "patterns": [
+        {
+          "name": "keyword.operator.ternary.chipi",
+          "match": "\\?"
+        },
+        {
+          "name": "keyword.operator.arithmetic.chipi",
+          "match": "[+\\-*]"
+        },
+        {
+          "name": "punctuation.separator.format-spec.chipi",
+          "match": ":"
+        },
+        {
+          "name": "constant.other.format-spec.chipi",
+          "match": "(?<=:)[#0-9a-zA-Z]+"
+        },
+        {
+          "name": "support.function.builtin.chipi",
+          "match": "\\b(rotate_right|rotate_left)\\b"
+        },
+        {
+          "name": "entity.name.function.map-call.chipi",
+          "match": "\\b([a-z_][a-zA-Z0-9_]*)(?=\\()"
+        },
+        {
+          "name": "constant.numeric.decimal.chipi",
+          "match": "\\b\\d+\\b"
+        },
+        {
+          "name": "constant.numeric.hex.chipi",
+          "match": "\\b0[xX][0-9a-fA-F]+\\b"
+        },
+        {
+          "name": "variable.parameter.field.chipi",
+          "match": "\\b[a-z_][a-zA-Z0-9_]*\\b"
         }
       ]
     },
