@@ -221,6 +221,18 @@
           }
         },
         {
+          "name": "meta.transform.display.chipi",
+          "match": "(display)\\(([a-z_]+)\\)",
+          "captures": {
+            "1": {
+              "name": "support.function.transform.chipi"
+            },
+            "2": {
+              "name": "constant.language.chipi"
+            }
+          }
+        },
+        {
           "name": "punctuation.separator.comma.chipi",
           "match": ","
         }
