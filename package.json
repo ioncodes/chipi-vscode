@@ -2,7 +2,7 @@
   "name": "chipi-vscode",
   "displayName": "Chipi Language",
   "description": "Syntax highlighting for chipi DSL",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "publisher": "local",
   "engines": {
     "vscode": "^1.80.0"

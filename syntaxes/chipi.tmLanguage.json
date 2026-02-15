@@ -470,7 +470,7 @@
     },
     "fixed-bits": {
       "name": "meta.fixed-bits.chipi",
-      "match": "\\[(\\d+)(?::(\\d+))?\\]\\s*=\\s*([01]+)",
+      "match": "\\[(\\d+)(?::(\\d+))?\\]\\s*=\\s*([01?]+)",
       "captures": {
         "1": {
           "name": "constant.numeric.decimal.chipi"
@@ -479,7 +479,16 @@
           "name": "constant.numeric.decimal.chipi"
         },
         "3": {
-          "name": "constant.numeric.binary.chipi"
+          "patterns": [
+            {
+              "name": "constant.character.wildcard.chipi",
+              "match": "\\?+"
+            },
+            {
+              "name": "constant.numeric.binary.chipi",
+              "match": "[01]+"
+            }
+          ]
         }
       }
     },
