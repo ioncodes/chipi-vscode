@@ -1,7 +1,7 @@
 {
-  "name": "chipi-lang",
+  "name": "chipi-vscode",
   "displayName": "Chipi Language",
-  "description": "Syntax highlighting for chipi files",
+  "description": "Syntax highlighting for chipi DSL",
   "version": "0.1.0",
   "publisher": "local",
   "engines": {
