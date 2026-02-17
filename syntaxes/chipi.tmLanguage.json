@@ -104,6 +104,21 @@
           }
         },
         {
+          "name": "meta.property.endian.chipi",
+          "match": "^\\s*(endian)\\s*(=)\\s*(big|little)\\s*$",
+          "captures": {
+            "1": {
+              "name": "variable.parameter.chipi"
+            },
+            "2": {
+              "name": "keyword.operator.assignment.chipi"
+            },
+            "3": {
+              "name": "constant.language.chipi"
+            }
+          }
+        },
+        {
           "name": "meta.property.max-units.chipi",
           "match": "^\\s*(max_units)\\s*(=)\\s*(\\d+)\\s*$",
           "captures": {
