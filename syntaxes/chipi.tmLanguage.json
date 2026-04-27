@@ -10,6 +10,24 @@
       "include": "#include-statement"
     },
     {
+      "include": "#bindings-target-block"
+    },
+    {
+      "include": "#bindings-dispatch-block"
+    },
+    {
+      "include": "#bindings-processor-block"
+    },
+    {
+      "include": "#bindings-architecture-block"
+    },
+    {
+      "include": "#bindings-handler-block"
+    },
+    {
+      "include": "#bindings-keywords"
+    },
+    {
       "include": "#decoder-block"
     },
     {
@@ -550,6 +568,323 @@
           "name": "constant.numeric.decimal.chipi"
         }
       }
+    },
+    "bindings-target-block": {
+      "name": "meta.bindings.target.chipi",
+      "begin": "^\\s*(target)\\s+(rust|cpp|ida|binja)\\s*(\\{)",
+      "end": "^\\}",
+      "beginCaptures": {
+        "1": { "name": "keyword.other.bindings.chipi" },
+        "2": { "name": "constant.language.target.chipi" },
+        "3": { "name": "punctuation.section.block.begin.chipi" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.section.block.end.chipi" }
+      },
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#bindings-decoder-block" },
+        { "include": "#bindings-dispatch-block" },
+        { "include": "#bindings-processor-block" },
+        { "include": "#bindings-architecture-block" }
+      ]
+    },
+    "bindings-decoder-block": {
+      "name": "meta.bindings.decoder.chipi",
+      "begin": "^(\\s*)(decoder|subdecoder)\\s+([A-Z][a-zA-Z0-9_]*)\\s*(\\{)",
+      "end": "^\\1\\}",
+      "beginCaptures": {
+        "2": { "name": "keyword.other.bindings.chipi" },
+        "3": { "name": "entity.name.type.decoder.chipi" },
+        "4": { "name": "punctuation.section.block.begin.chipi" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.section.block.end.chipi" }
+      },
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#bindings-decoder-block" },
+        { "include": "#bindings-includes-block" },
+        { "include": "#bindings-type-alias" },
+        { "include": "#bindings-keyword-with-string" },
+        { "include": "#bindings-keyword-with-ident" },
+        { "include": "#bindings-strings" },
+        { "include": "#bindings-path" },
+        { "include": "#bindings-numbers" }
+      ]
+    },
+    "bindings-dispatch-block": {
+      "name": "meta.bindings.dispatch.chipi",
+      "begin": "^(\\s*)(dispatch|subdispatch)\\s+([A-Z][a-zA-Z0-9_]*)\\s*(\\{)",
+      "end": "^\\1\\}",
+      "beginCaptures": {
+        "2": { "name": "keyword.other.bindings.chipi" },
+        "3": { "name": "entity.name.type.dispatch.chipi" },
+        "4": { "name": "punctuation.section.block.begin.chipi" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.section.block.end.chipi" }
+      },
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#bindings-handler-block" },
+        { "include": "#bindings-instruction-type-block" },
+        { "include": "#bindings-dispatch-block" },
+        { "include": "#bindings-keyword-with-string" },
+        { "include": "#bindings-keyword-with-strategy" },
+        { "include": "#bindings-keyword-with-path" },
+        { "include": "#bindings-strings" },
+        { "include": "#bindings-strategy" },
+        { "include": "#bindings-path" }
+      ]
+    },
+    "bindings-processor-block": {
+      "name": "meta.bindings.processor.chipi",
+      "begin": "^(\\s*)(processor)\\s+([A-Z][a-zA-Z0-9_]*)\\s*(\\{)",
+      "end": "^\\1\\}",
+      "beginCaptures": {
+        "2": { "name": "keyword.other.bindings.chipi" },
+        "3": { "name": "entity.name.type.processor.chipi" },
+        "4": { "name": "punctuation.section.block.begin.chipi" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.section.block.end.chipi" }
+      },
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#bindings-registers-block" },
+        { "include": "#bindings-flow-block" },
+        { "include": "#bindings-keyword-with-string" },
+        { "include": "#bindings-keyword-with-number" },
+        { "include": "#bindings-strings" },
+        { "include": "#bindings-numbers" }
+      ]
+    },
+    "bindings-architecture-block": {
+      "name": "meta.bindings.architecture.chipi",
+      "begin": "^(\\s*)(architecture)\\s+([A-Z][a-zA-Z0-9_]*)\\s*(\\{)",
+      "end": "^\\1\\}",
+      "beginCaptures": {
+        "2": { "name": "keyword.other.bindings.chipi" },
+        "3": { "name": "entity.name.type.architecture.chipi" },
+        "4": { "name": "punctuation.section.block.begin.chipi" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.section.block.end.chipi" }
+      },
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#bindings-registers-block" },
+        { "include": "#bindings-keyword-with-string" },
+        { "include": "#bindings-keyword-with-number" },
+        { "include": "#bindings-keyword-with-endianness" },
+        { "include": "#bindings-strings" },
+        { "include": "#bindings-numbers" },
+        { "include": "#bindings-endianness" }
+      ]
+    },
+    "bindings-handler-block": {
+      "name": "meta.bindings.handler.chipi",
+      "begin": "^(\\s*)(handler)\\s+([a-z_][a-zA-Z0-9_]*)(?:\\s*<([^>]*)>)?\\s*(\\{)",
+      "end": "^\\1\\}",
+      "beginCaptures": {
+        "2": { "name": "keyword.other.bindings.chipi" },
+        "3": { "name": "entity.name.function.handler.chipi" },
+        "4": {
+          "patterns": [
+            { "name": "storage.modifier.const.chipi", "match": "\\bconst\\b" },
+            { "name": "variable.parameter.handler.chipi", "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b" }
+          ]
+        },
+        "5": { "name": "punctuation.section.block.begin.chipi" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.section.block.end.chipi" }
+      },
+      "patterns": [
+        { "include": "#comments" },
+        {
+          "name": "entity.name.function.instruction.chipi",
+          "match": "\\b[a-z_][a-zA-Z0-9_]*\\b"
+        }
+      ]
+    },
+    "bindings-instruction-type-block": {
+      "name": "meta.bindings.instruction-type.chipi",
+      "begin": "^(\\s*)(instruction_type)\\s+([a-zA-Z_][a-zA-Z0-9_:]*)\\s*(\\{)",
+      "end": "^\\1\\}",
+      "beginCaptures": {
+        "2": { "name": "keyword.other.bindings.chipi" },
+        "3": { "name": "entity.name.type.path.chipi" },
+        "4": { "name": "punctuation.section.block.begin.chipi" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.section.block.end.chipi" }
+      },
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#bindings-keyword-with-string" },
+        { "include": "#bindings-strings" }
+      ]
+    },
+    "bindings-registers-block": {
+      "name": "meta.bindings.registers.chipi",
+      "begin": "^(\\s*)(registers|segment_registers)\\s*(\\{)",
+      "end": "^\\1\\}",
+      "beginCaptures": {
+        "2": { "name": "keyword.other.bindings.chipi" },
+        "3": { "name": "punctuation.section.block.begin.chipi" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.section.block.end.chipi" }
+      },
+      "patterns": [
+        { "include": "#comments" },
+        {
+          "name": "variable.other.register.chipi",
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+        }
+      ]
+    },
+    "bindings-flow-block": {
+      "name": "meta.bindings.flow.chipi",
+      "begin": "^(\\s*)(flow)\\s*(\\{)",
+      "end": "^\\1\\}",
+      "beginCaptures": {
+        "2": { "name": "keyword.other.bindings.chipi" },
+        "3": { "name": "punctuation.section.block.begin.chipi" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.section.block.end.chipi" }
+      },
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#bindings-flow-inner-block" }
+      ]
+    },
+    "bindings-flow-inner-block": {
+      "name": "meta.bindings.flow.inner.chipi",
+      "begin": "^(\\s*)(calls|returns|stops)\\s*(\\{)",
+      "end": "^\\1\\}",
+      "beginCaptures": {
+        "2": { "name": "keyword.other.bindings.chipi" },
+        "3": { "name": "punctuation.section.block.begin.chipi" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.section.block.end.chipi" }
+      },
+      "patterns": [
+        { "include": "#comments" },
+        {
+          "name": "entity.name.function.instruction.chipi",
+          "match": "\\b[a-z_][a-zA-Z0-9_]*\\b"
+        }
+      ]
+    },
+    "bindings-includes-block": {
+      "name": "meta.bindings.includes.chipi",
+      "begin": "^(\\s*)(includes)\\s*(\\{)",
+      "end": "^\\1\\}",
+      "beginCaptures": {
+        "2": { "name": "keyword.other.bindings.chipi" },
+        "3": { "name": "punctuation.section.block.begin.chipi" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.section.block.end.chipi" }
+      },
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#bindings-strings" }
+      ]
+    },
+    "bindings-type-alias": {
+      "name": "meta.bindings.type-alias.chipi",
+      "match": "^\\s*(type)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*(=)\\s*([a-zA-Z_][a-zA-Z0-9_:]*)",
+      "captures": {
+        "1": { "name": "keyword.other.bindings.chipi" },
+        "2": { "name": "entity.name.type.alias.chipi" },
+        "3": { "name": "keyword.operator.assignment.chipi" },
+        "4": { "name": "entity.name.type.path.chipi" }
+      }
+    },
+    "bindings-keyword-with-path": {
+      "match": "\\b(context|handlers|invalid_handler|instruction_type)\\s+([a-zA-Z_][a-zA-Z0-9_:]*)",
+      "captures": {
+        "1": { "name": "keyword.other.bindings.chipi" },
+        "2": { "name": "entity.name.type.path.chipi" }
+      }
+    },
+    "bindings-keyword-with-string": {
+      "match": "\\b(output|name|long_name|namespace)\\s+(\"[^\"]*\")",
+      "captures": {
+        "1": { "name": "keyword.other.bindings.chipi" },
+        "2": { "name": "string.quoted.double.bindings.chipi" }
+      }
+    },
+    "bindings-keyword-with-number": {
+      "match": "\\b(id|address_size|bytes_per_unit|default_int_size)\\s+(0[xX][0-9a-fA-F]+|\\d+)",
+      "captures": {
+        "1": { "name": "keyword.other.bindings.chipi" },
+        "2": { "name": "constant.numeric.chipi" }
+      }
+    },
+    "bindings-keyword-with-strategy": {
+      "match": "\\b(strategy)\\s+(fn_ptr_lut|jump_table|flat_lut|flat_match)\\b",
+      "captures": {
+        "1": { "name": "keyword.other.bindings.chipi" },
+        "2": { "name": "constant.language.strategy.chipi" }
+      }
+    },
+    "bindings-keyword-with-endianness": {
+      "match": "\\b(endianness)\\s+(big|little)\\b",
+      "captures": {
+        "1": { "name": "keyword.other.bindings.chipi" },
+        "2": { "name": "constant.language.endianness.chipi" }
+      }
+    },
+    "bindings-keyword-with-ident": {
+      "match": "\\b(guard_style)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
+      "captures": {
+        "1": { "name": "keyword.other.bindings.chipi" },
+        "2": { "name": "constant.language.chipi" }
+      }
+    },
+    "bindings-keywords": {
+      "patterns": [
+        {
+          "name": "keyword.other.bindings.chipi",
+          "match": "\\b(target|decoder|subdecoder|dispatch|subdispatch|processor|architecture|handler|type|strategy|endianness|output|context|handlers|invalid_handler|instruction_type|name|long_name|id|address_size|bytes_per_unit|default_int_size|registers|segment_registers|flow|calls|returns|stops|namespace|guard_style|includes)\\b"
+        }
+      ]
+    },
+    "bindings-strategy": {
+      "name": "constant.language.strategy.chipi",
+      "match": "\\b(fn_ptr_lut|jump_table|flat_lut|flat_match)\\b"
+    },
+    "bindings-endianness": {
+      "name": "constant.language.endianness.chipi",
+      "match": "\\b(big|little)\\b"
+    },
+    "bindings-path": {
+      "name": "entity.name.type.path.chipi",
+      "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*(?:::[a-zA-Z_][a-zA-Z0-9_]*)+\\b"
+    },
+    "bindings-numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.hex.chipi",
+          "match": "\\b0[xX][0-9a-fA-F]+\\b"
+        },
+        {
+          "name": "constant.numeric.decimal.chipi",
+          "match": "\\b\\d+\\b"
+        }
+      ]
+    },
+    "bindings-strings": {
+      "name": "string.quoted.double.bindings.chipi",
+      "begin": "\"",
+      "end": "\""
     }
   }
 }
